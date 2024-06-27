@@ -3,6 +3,7 @@ package com.example.welcomeapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.i("MyTag","Main Activity")
         val greetingTextView = findViewById<TextView>(R.id.tvWelcome)
         val inputField = findViewById<EditText>(R.id.etUsername)
         val submitButton = findViewById<Button>(R.id.btnSubmit)
@@ -36,5 +38,35 @@ class MainActivity : AppCompatActivity() {
             startActivity(intentUserName)
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i("MyTag","Main Activity onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i("MyTag","Main Activity onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("MyTag","Main Activity onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("MyTag","Main Activity onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("MyTag","Main Activity onDestroy")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.i("MyTag","Main Activity onRestart")
     }
 }
