@@ -3,13 +3,23 @@ package com.example.welcomeapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Website.URL
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import java.net.HttpURLConnection
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var userDataTextView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         val inputField = findViewById<EditText>(R.id.etUsername)
         val submitButton = findViewById<Button>(R.id.btnSubmit)
         val nextButton = findViewById<Button>(R.id.btnNext)
+        userDataTextView = findViewById(R.id.userDataTextView)
+        
         submitButton.setOnClickListener {
             val enteredName = inputField.text.toString()
             if (enteredName == ""){
@@ -29,8 +41,8 @@ class MainActivity : AppCompatActivity() {
             else {
                 val message = "Welcome $enteredName"
                 greetingTextView.text = message
-                inputField.text.clear()
             }
+            fetchUserData()
         }
         nextButton.setOnClickListener {
             val intentUserName = Intent (this, SecondActivity::class.java)
@@ -40,33 +52,38 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.i("MyTag","Main Activity onStart")
+    private fun fetchUserData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val url = URL("https://reqres.in/api/users?page=2")
+            val connection = url.openConnection() as HttpURLConnection
+            connection.requestMethod ="GET"
+
+            val responseCode = connection.responseCode
+            val responseMessage = connection.responseMessage
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                val response = connection.inputStream.bufferedReader().use { it.readText()}
+                val users = JSONArray(response)
+                val userData = StringBuilder()
+
+                for (i in 0 until users.length()){
+                    val user = users.getJSONObject(i)
+                    val firstName = user.getString("first_name")
+                    val lastName = user.getString("last_name")
+                    val email = user.getString("email")
+                    userData.append("Name: $firstName $lastName\n Email: $email\n\n")
+                }
+
+                withContext(Dispatchers.Main) {
+                    userDataTextView.text = userData.toString()
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    userDataTextView.text = "Failed to fetch data: $responseMessage"
+                }
+            }
+            connection.disconnect()
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.i("MyTag","Main Activity onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.i("MyTag","Main Activity onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i("MyTag","Main Activity onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i("MyTag","Main Activity onDestroy")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.i("MyTag","Main Activity onRestart")
-    }
 }

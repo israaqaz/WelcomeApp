@@ -18,9 +18,9 @@ class SecondActivity : AppCompatActivity() {
         setContentView(R.layout.activity_second)
         val contactNames = listOf<Contact>(
             Contact("Israa","qaznilii@ksau-hs.edu.sa","45672"),
-            Contact("Abdullah","alqahtania@ksau-hs.edu.sa","45821"),
+            Contact("Abdullah","alqahtania@ksau-hs.edu.sa","45752"),
             Contact("Abdulrahman","qahtaniabd@ksau-hs.edu.sa","45833"),
-            Contact("Hussain","alsaylanih@ksau-hs.edu.sa","45752")
+            Contact("Hussain","alsaylanih@ksau-hs.edu.sa","45821")
         )
 
         val recycleView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -39,38 +39,9 @@ class SecondActivity : AppCompatActivity() {
     private fun contactInfo(contact: Contact){
         Toast.makeText(
             this@SecondActivity,
-            "Email: ${contact.email} Number is: ${contact.phoneNumber}",
+            "name: ${contact.name} \n Email: ${contact.email} \n PhoneNumber: ${contact.phoneNumber}",
             Toast.LENGTH_LONG
         ).show()
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.i("MyTag","Second Activity onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.i("MyTag","Second Activity onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.i("MyTag","Second Activity onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i("MyTag","Second Activity onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i("MyTag","Second Activity onDestroy")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.i("MyTag","Second Activity onRestart")
-    }
 }
