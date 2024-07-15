@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val inputField = findViewById<EditText>(R.id.etUsername)
         val submitButton = findViewById<Button>(R.id.btnSubmit)
         val nextButton = findViewById<Button>(R.id.btnNext)
-        userDataTextView = findViewById(R.id.userDataTextView)
+       // userDataTextView = findViewById(R.id.userDataTextView)
         
         submitButton.setOnClickListener {
             val enteredName = inputField.text.toString()
@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity() {
                 val message = "Welcome $enteredName"
                 greetingTextView.text = message
             }
-            fetchUserData()
+
+           // fetchUserData()
         }
         nextButton.setOnClickListener {
             val intentUserName = Intent (this, SecondActivity::class.java)
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun fetchUserData() {
+    /*private fun fetchUserData() {
         CoroutineScope(Dispatchers.IO).launch {
             val url = URL("https://reqres.in/api/users?page=2")
             val connection = url.openConnection() as HttpURLConnection
@@ -74,16 +75,16 @@ class MainActivity : AppCompatActivity() {
                     userData.append("Name: $firstName $lastName\n Email: $email\n\n")
                 }
 
-                withContext(Dispatchers.Main) {
+                withContext(Dispatchers.IO) {
                     userDataTextView.text = userData.toString()
                 }
             } else {
-                withContext(Dispatchers.Main) {
+                withContext(Dispatchers.IO) {
                     userDataTextView.text = "Failed to fetch data: $responseMessage"
                 }
             }
             connection.disconnect()
         }
-    }
+    }*/
 
 }
