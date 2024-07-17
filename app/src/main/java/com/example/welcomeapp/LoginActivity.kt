@@ -9,6 +9,7 @@ import android.widget.EditText
 
 
 class LoginActivity : AppCompatActivity() {
+
     private lateinit var username:EditText
     private lateinit var userEmail:EditText
 

@@ -1,47 +1,57 @@
 package com.example.welcomeapp
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.moshi.Moshi
+import java.net.HttpURLConnection
+import kotlinx.coroutines.*
+import java.net.URL
 
 class SecondActivity : AppCompatActivity() {
-
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: RecyclerViewAdapter
+    private lateinit var contacts: List<Contact>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("MyTag","Second Activity")
+        Log.i("MyTag", "Second Activity")
         setContentView(R.layout.activity_second)
-        val contactNames = listOf<Contact>(
-            Contact("Israa","qaznilii@ksau-hs.edu.sa","45672"),
-            Contact("Abdullah","alqahtania@ksau-hs.edu.sa","45752"),
-            Contact("Abdulrahman","qahtaniabd@ksau-hs.edu.sa","45833"),
-            Contact("Hussain","alsaylanih@ksau-hs.edu.sa","45821")
-        )
 
-        val recycleView = findViewById<RecyclerView>(R.id.recyclerView)
-        recycleView.setBackgroundColor(Color.GRAY)
-        recycleView.layoutManager = LinearLayoutManager(this)
-        recycleView.adapter = RecyclerViewAdapter(
-            contactNames,
-        ) { selectedContact: Contact ->
-            contactInfo(selectedContact)
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        fetchUserData()
+    }
+
+
+    private fun fetchUserData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL("https://reqres.in/api/users?page=2")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.connect()
+
+                val inputStream = connection.inputStream
+                val json = inputStream.bufferedReader().use { it.readText() }
+                val moshi = Moshi.Builder().build()
+                val jsonAdapter = moshi.adapter(UserData::class.java)
+                val userResponse = jsonAdapter.fromJson(json)
+
+                if (userResponse != null) {
+                    contacts = userResponse.data
+                    withContext(Dispatchers.Main) {
+                        adapter = RecyclerViewAdapter(contacts)
+                        recyclerView.adapter = adapter
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
-
-        val userName = findViewById<TextView>(R.id.tvUsernametxt)
-        userName.text = intent.getStringExtra("username")
-
     }
-    private fun contactInfo(contact: Contact){
-        Toast.makeText(
-            this@SecondActivity,
-            "name: ${contact.name} \n Email: ${contact.email} \n PhoneNumber: ${contact.phoneNumber}",
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
 }
+
