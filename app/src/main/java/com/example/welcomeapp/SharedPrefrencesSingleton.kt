@@ -11,6 +11,7 @@ object SharedPrefrencesSingleton {
     //List of keys
     private const val KEY_USERNAME = "userCredentials_name"
     private const val KEY_EMAIL = "userCredentials_email"
+    private const val KEY_LOGGED_IN = "logged_in"
 
     // Initializing the SharedPreferences object
     fun init(context: Context){
@@ -24,6 +25,7 @@ object SharedPrefrencesSingleton {
             // this function took two parameters and then saved them in (key, valur) arguments
             putString(KEY_USERNAME, username)
             putString(KEY_EMAIL,email)
+            putBoolean(KEY_LOGGED_IN,true)
             apply()
         }
     }
@@ -35,6 +37,17 @@ object SharedPrefrencesSingleton {
 
     fun getEmail(): String? {
         return preferences.getString(KEY_EMAIL, null)
+    }
+
+    fun isLoggedIn(): Boolean {
+        return preferences.getBoolean(KEY_LOGGED_IN, false)
+    }
+
+    fun logout() {
+        val editor = preferences.edit()
+        editor.putBoolean(KEY_LOGGED_IN, false)
+        editor.clear()
+        editor.apply()
     }
 
 // i can add more functions for any other data types:
