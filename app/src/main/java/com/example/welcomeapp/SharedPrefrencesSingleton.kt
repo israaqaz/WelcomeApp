@@ -13,6 +13,7 @@ object SharedPrefrencesSingleton {
     private const val KEY_EMAIL = "userCredentials_email"
     private const val KEY_LOGGED_IN = "logged_in"
 
+
     // Initializing the SharedPreferences object
     fun init(context: Context){
     preferences = context.getSharedPreferences(PREF_NAME, MODE)
@@ -43,15 +44,27 @@ object SharedPrefrencesSingleton {
         return preferences.getBoolean(KEY_LOGGED_IN, false)
     }
 
+    fun login() {
+        preferences.edit().putBoolean(KEY_LOGGED_IN, true).apply()
+    }
+
     fun logout() {
         val editor = preferences.edit()
         editor.putBoolean(KEY_LOGGED_IN, false)
-        editor.clear()
+       // editor.clear()
         editor.apply()
     }
 
+    // to check if email is already registered
+    fun isEmailRegistered(email: String): Boolean {
+        return preferences.getString(KEY_EMAIL, null) == email
+
+    }
+
+
+
+
 // i can add more functions for any other data types:
 // (int, float, char, boolean, Enumerated, Array, Date, Time, Datetime, Timestamp)
-
 
 }

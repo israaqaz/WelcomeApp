@@ -1,5 +1,7 @@
 package com.example.welcomeapp
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -47,8 +49,21 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
+        if (SharedPrefrencesSingleton.isEmailRegistered(email)) {
+            editTextEmail.error = "Email is already registered"
+            Toast.makeText(this,"Email is already registered", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Save user data in SharedPreferences
+        SharedPrefrencesSingleton.saveUserCredentials(username, email)
+
         // Add code to save the user data to the database or authentication server
         Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show()
-    }
 
+        // Navigate to LoginActivity
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }

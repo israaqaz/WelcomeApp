@@ -21,6 +21,9 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         Log.i("MyTag","Login Activity on Create")
 
+        // Initialize the SharedPreferences
+        SharedPrefrencesSingleton.init(this)
+
         // Check if user is already logged in
         if (SharedPrefrencesSingleton.isLoggedIn()) {
             // User is logged in, redirect to MainActivity
@@ -46,17 +49,21 @@ class LoginActivity : AppCompatActivity() {
 
 
             if (usernameName.isNotEmpty() && useremailEmail.isNotEmpty()) {
-            // using sharedpreferences singleton to save data
-            SharedPrefrencesSingleton.saveUserCredentials(usernameName,useremailEmail)
+
+                if (SharedPrefrencesSingleton.isEmailRegistered(useremailEmail)) {
+                    SharedPrefrencesSingleton.login()
 
                 val intentLogin = Intent(this, MainActivity::class.java)
                 startActivity(intentLogin)
                 finish()
+                } else {
+                    Toast.makeText(this, "You're not registered, press the register button to register", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Toast.makeText(this, "Please enter valid credentials or Register", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please enter your credentials", Toast.LENGTH_SHORT).show()
             }
 
-            }
+        }
 
         registerbtn.setOnClickListener{
             // moving to another activity using intent
