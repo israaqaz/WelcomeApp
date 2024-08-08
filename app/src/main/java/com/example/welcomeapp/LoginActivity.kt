@@ -42,11 +42,9 @@ class LoginActivity : AppCompatActivity() {
 
 
         logInbtn.setOnClickListener {
-
             //declaring objects to save the data in it
             val usernameName = username.text.toString()
             val useremailEmail = userEmail.text.toString()
-
 
             if (usernameName.isNotEmpty() && useremailEmail.isNotEmpty()) {
 
