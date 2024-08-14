@@ -32,6 +32,19 @@ class MainActivity : AppCompatActivity() {
         val message = "Welcome $username"
         greetingTextView.text = message
 
+        binding.bottomNavigationBar.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home -> goToFragment(HomeFragment())
+                R.id.profile -> goToFragment(ProfileFragment())
+                R.id.settings -> goToFragment(SettingsFragment())
+
+            else ->{
+                
+            }
+        }
+            
+            true
+        }
 
         binding.btnRecords.setOnClickListener {
             goToFragment(RecordsFragment())
@@ -46,16 +59,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intentLogout)
             this?.finish() // Finish MainActivity to prevent the user from coming back here with the back button
         }
-
-
-
-
     }
 
     private fun goToFragment(fragment: Fragment){
         fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, fragment).commit()
     }
-
-
 }
