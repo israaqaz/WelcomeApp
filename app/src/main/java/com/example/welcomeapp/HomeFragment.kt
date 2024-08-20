@@ -13,8 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class HomeFragment : Fragment() {
 
-    private lateinit var logoutButton: Button
-    private lateinit var btnShowRecords: Button
+
     private lateinit var greetingTextView: TextView
 
     override fun onCreateView(
@@ -28,30 +27,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        logoutButton = view.findViewById(R.id.btnLogout)
         greetingTextView = view.findViewById(R.id.tvWelcome)
-        btnShowRecords = view.findViewById(R.id.btnShowRecords)
 
 
         val username = SharedPrefrencesSingleton.getUsername()
         val message = "Welcome $username"
         greetingTextView.text = message
 
-        btnShowRecords.setOnClickListener {
-            fragmentManager?.beginTransaction()
-                ?.replace(R.id.fragmentContainerView, RecordsFragment())
-                ?.commit()
 
-            (activity as? AppCompatActivity)?.supportActionBar?.title = "Records"
-        }
-
-        logoutButton.setOnClickListener {
-
-            SharedPrefrencesSingleton.logout()
-
-            val intentLogout = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intentLogout)
-            requireActivity().finish()
-        }
     }
 }

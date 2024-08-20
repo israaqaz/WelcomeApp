@@ -42,6 +42,7 @@ android {
     }
 }
 
+
 dependencies {
     //fragment implementation
     val fragment_version = "1.8.2"

@@ -17,7 +17,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 
 
-class RecordsFragment : Fragment() {
+class RecoedsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecyclerViewAdapter
     private lateinit var contacts: List<Contact>
@@ -64,4 +64,3 @@ class RecordsFragment : Fragment() {
         }
     }
 }
-

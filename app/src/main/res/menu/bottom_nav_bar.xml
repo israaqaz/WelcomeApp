@@ -8,10 +8,10 @@
         android:title="Home"
         android:icon="@drawable/baseline_home_24"/>
     <item
-        android:id="@+id/profile"
+        android:id="@+id/records"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="Profile"
+        android:title="records"
         android:icon="@drawable/baseline_person_24"/>
     <item
         android:id="@+id/settings"

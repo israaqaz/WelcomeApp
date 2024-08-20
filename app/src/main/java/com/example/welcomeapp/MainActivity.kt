@@ -1,11 +1,8 @@
 package com.example.welcomeapp
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.welcomeapp.databinding.ActivityMainBinding
@@ -32,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationBar.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> goToFragment(HomeFragment(), "Home")
-                R.id.profile -> goToFragment(ProfileFragment(), "Profile")
+                R.id.records -> goToFragment(RecoedsFragment(), "Records")
                 R.id.settings -> goToFragment(SettingsFragment(), "Settings")
                 else -> {}
             }

@@ -1,13 +1,16 @@
 package com.example.welcomeapp
-
 import android.content.Intent
-import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import android.Manifest
 
 
 class LoginActivity : AppCompatActivity() {
@@ -51,9 +54,9 @@ class LoginActivity : AppCompatActivity() {
                 if (SharedPrefrencesSingleton.isEmailRegistered(useremailEmail)) {
                     SharedPrefrencesSingleton.login()
 
-                val intentLogin = Intent(this, MainActivity::class.java)
-                startActivity(intentLogin)
-                finish()
+                    val intentLogin = Intent(this, MainActivity::class.java)
+                    startActivity(intentLogin)
+                    finish()
                 } else {
                     Toast.makeText(this, "You're not registered, press the register button to register", Toast.LENGTH_SHORT).show()
                 }
@@ -65,8 +68,8 @@ class LoginActivity : AppCompatActivity() {
 
         registerbtn.setOnClickListener{
             // moving to another activity using intent
-                val intentRegister = Intent (this, RegisterActivity::class.java)
-                startActivity(intentRegister)
+            val intentRegister = Intent (this, RegisterActivity::class.java)
+            startActivity(intentRegister)
         }
     }
 
@@ -82,3 +85,4 @@ class LoginActivity : AppCompatActivity() {
 
     }
 }
+
