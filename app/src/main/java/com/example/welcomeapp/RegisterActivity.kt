@@ -34,18 +34,41 @@ class RegisterActivity : AppCompatActivity() {
         val email = editTextEmail.text.toString().trim()
         val password = editTextPassword.text.toString().trim()
 
+        //username field conditions
         if (username.isEmpty()) {
             editTextUsername.error = "Username is required"
             return
         }
+        if (username.length < 5) {
+            editTextUsername.error = "Username must be at least 5 characters long"
+            return
+        }
+        if (!username.matches(Regex("^[a-zA-Z0-9]*$"))) {
+            editTextUsername.error = "Username can only contain letters and numbers"
+            return
+        }
 
+        //Email field conditions
         if (email.isEmpty()) {
             editTextEmail.error = "Email is required"
             return
         }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            editTextEmail.error = "Please enter a valid email"
+            return
+        }
 
+        //Password field conditions
         if (password.isEmpty()) {
             editTextPassword.error = "Password is required"
+            return
+        }
+        if (password.length < 8) {
+            editTextPassword.error = "Password must be at least 8 characters long"
+            return
+        }
+        if (!password.matches(Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#!$%^&+=]).{8,}$"))) {
+            editTextPassword.error = "Password must include a number, an uppercase letter, a lowercase letter, and a special character"
             return
         }
 

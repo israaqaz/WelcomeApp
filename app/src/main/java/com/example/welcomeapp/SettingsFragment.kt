@@ -2,6 +2,7 @@ package com.example.welcomeapp
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -53,12 +54,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private fun updatePermissionStatus() {
         if (checkBluetoothPermissions()) {
             bluetoothStatus.text = "Allowed"
+            bluetoothStatus.setTextColor(Color.GREEN)
         } else {
             bluetoothStatus.text = "Not Allowed"
         }
 
         if (checkLocationPermissions()) {
             locationStatus.text = "Allowed"
+            locationStatus.setTextColor(Color.GREEN)
         } else {
             locationStatus.text = "Not Allowed"
         }

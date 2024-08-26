@@ -45,9 +45,10 @@
                     android:id="@+id/bluetoothStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Not Allowed"
                     android:layout_marginLeft="10dp"
-                    android:textSize="24sp"/>
+                    android:text="Not Allowed"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="24sp" />
             </LinearLayout>
 
             <Button
@@ -76,9 +77,10 @@
                     android:id="@+id/locationStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Not Allowed"
                     android:layout_marginLeft="10dp"
-                    android:textSize="24sp"/>
+                    android:text="Not Allowed"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="24sp" />
             </LinearLayout>
 
             <Button

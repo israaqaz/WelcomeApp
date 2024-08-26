@@ -15,8 +15,7 @@ import android.Manifest
 
 class LoginActivity : AppCompatActivity() {
 
-    // we define objects here to call it in multiple functions
-    private lateinit var username:EditText // object type should be defined when using lateinit
+    private lateinit var username:EditText
     private lateinit var userEmail:EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,19 +23,15 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         Log.i("MyTag","Login Activity on Create")
 
-        // Initialize the SharedPreferences
         SharedPrefrencesSingleton.init(this)
 
-        // Check if user is already logged in
         if (SharedPrefrencesSingleton.isLoggedIn()) {
-            // User is logged in, redirect to MainActivity
             val intentLogin = Intent(this, MainActivity::class.java)
             startActivity(intentLogin)
             finish()
             return
         }
 
-        // fields declaring
         username = findViewById(R.id.usernameET)
         userEmail = findViewById(R.id.etUserEmail)
         val userPassword = findViewById<EditText>(R.id.etUserPassword)
@@ -45,11 +40,12 @@ class LoginActivity : AppCompatActivity() {
 
 
         logInbtn.setOnClickListener {
-            //declaring objects to save the data in it
-            val usernameName = username.text.toString()
-            val useremailEmail = userEmail.text.toString()
+            val usernameName = username.text.toString().trim()
+            val useremailEmail = userEmail.text.toString().trim()
+            val userPassword = userPassword.text.toString()
 
-            if (usernameName.isNotEmpty() && useremailEmail.isNotEmpty()) {
+
+            if (usernameName.isNotEmpty() && useremailEmail.isNotEmpty() && userPassword.isNotEmpty()) {
 
                 if (SharedPrefrencesSingleton.isEmailRegistered(useremailEmail)) {
                     SharedPrefrencesSingleton.login()
